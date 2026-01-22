@@ -1,4 +1,5 @@
 import { getAllWalkSessions } from "@/db/queries";
+import AddWalkForm from "@/components/walk/AddWalkForm";
 
 export default async function Home() {
   const allSessions = await getAllWalkSessions ()
@@ -11,6 +12,8 @@ export default async function Home() {
       <pre className="w-full max-w-4xl p-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow overflow-x-auto">
         {JSON.stringify(allSessions, null, 2)}
       </pre>
+
+      <AddWalkForm />
     </main>
   );
 }

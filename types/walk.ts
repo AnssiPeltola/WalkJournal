@@ -5,3 +5,11 @@ export type NewWalkSession = {
   steps: number
   calories?: number
 }
+
+export type WalkStats = {
+  totalSessions: number
+  totalDurationSec: number
+  totalDistanceKm: number
+  totalSteps: number
+  totalCalories: number
+}

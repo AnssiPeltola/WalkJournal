@@ -1,5 +1,7 @@
 import { getAllWalkSessions, getWalkStats } from "@/db/queries";
 import AddWalkForm from "@/components/walk/AddWalkForm";
+import WalkStatsChart from "@/components/charts/WalkStatsChart";
+import TotalStatsDashboard from "@/components/stats/TotalStatsDashboard/TotalStatsDashboard";
 
 export default async function Home() {
   const allSessions = await getAllWalkSessions ()
@@ -21,6 +23,8 @@ export default async function Home() {
       </pre>
 
       <AddWalkForm />
+      <WalkStatsChart stats={totalStats} />
+      <TotalStatsDashboard stats={totalStats} />
     </main>
   );
 }

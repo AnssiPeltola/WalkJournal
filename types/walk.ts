@@ -6,7 +6,7 @@ export type NewWalkSession = {
   calories?: number
 }
 
-export type WalkStats = {
+export type WalkTotals = {
   totalSessions: number
   totalDurationSec: number
   totalDistanceKm: number

@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm'
 import { db } from './client'
 import { walkSessions } from './schema'
-import { NewWalkSession, WalkStats } from '@/types/walk'
+import { NewWalkSession, WalkTotals } from '@/types/walk'
 
 // Fetch all walking sessions from database
 export async function getAllWalkSessions() {
@@ -56,7 +56,7 @@ export async function createWalkSession(data: NewWalkSession) {
   }
 }
 
-export async function getWalkStats(): Promise<WalkStats> {
+export async function getWalkStats(): Promise<WalkTotals> {
   try {
     const result = await db
       .select({

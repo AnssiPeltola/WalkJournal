@@ -1,6 +1,7 @@
+import { sql } from 'drizzle-orm'
 import { db } from './client'
 import { walkSessions } from './schema'
-import { NewWalkSession } from '@/types/walk'
+import { NewWalkSession, WalkStats } from '@/types/walk'
 
 // Fetch all walking sessions from database
 export async function getAllWalkSessions() {
@@ -51,6 +52,25 @@ export async function createWalkSession(data: NewWalkSession) {
     }) // consider .returning here later
   } catch (err) {
     console.error('Failed to insert walk session' , err)
+    throw err
+  }
+}
+
+export async function getWalkStats(): Promise<WalkStats> {
+  try {
+    const result = await db
+      .select({
+        totalSessions: sql<number>`count(*)`,
+        totalDurationSec: sql<number>`coalesce(sum(${walkSessions.durationSec}), 0)`,
+        totalDistanceKm: sql<number>`coalesce(sum(${walkSessions.distanceKm}), 0)`,
+        totalSteps: sql<number>`coalesce(sum(${walkSessions.steps}), 0)`,
+        totalCalories: sql<number>`coalesce(sum(${walkSessions.calories}), 0)`,
+      })
+      .from(walkSessions)
+
+    return result[0]
+  } catch (err) {
+    console.error('Failed to fetch walk stats:', err)
     throw err
   }
 }

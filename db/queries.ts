@@ -1,7 +1,7 @@
-import { sql } from 'drizzle-orm'
+import { sql, desc } from 'drizzle-orm'
 import { db } from './client'
 import { walkSessions } from './schema'
-import { NewWalkSession, WalkTotals } from '@/types/walk'
+import { NewWalkSession, WalkTotals, WalkSession } from '@/types/walk'
 
 // Fetch all walking sessions from database
 export async function getAllWalkSessions() {
@@ -56,6 +56,7 @@ export async function createWalkSession(data: NewWalkSession) {
   }
 }
 
+// Fetch all walking sessions summed together
 export async function getWalkStats(): Promise<WalkTotals> {
   try {
     const result = await db
@@ -72,5 +73,20 @@ export async function getWalkStats(): Promise<WalkTotals> {
   } catch (err) {
     console.error('Failed to fetch walk stats:', err)
     throw err
+  }
+}
+
+export async function getLatestWalkSession(): Promise<WalkSession | null> {
+  try {
+    const result = await db
+      .select()
+      .from(walkSessions)
+      .orderBy(desc(walkSessions.id))
+      .limit(1);
+
+    return result[0] ?? null;
+  } catch (err) {
+    console.error('Failed to fetch latest walk session:', err);
+    return null;
   }
 }

@@ -1,6 +1,6 @@
 import { WalkTotals } from '@/types/walk'
 import { formatDuration } from '@/utils/formatDuration'
-import StatCard from './StatCard'
+import StatCard from '../StatCard'
 
 type Props = {
   stats: WalkTotals

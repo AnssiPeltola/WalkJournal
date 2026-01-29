@@ -2,6 +2,8 @@ import { getAllWalkSessions, getWalkStats } from "@/db/queries";
 import AddWalkForm from "@/components/walk/AddWalkForm";
 import WalkStatsChart from "@/components/charts/WalkStatsChart";
 import TotalStatsDashboard from "@/components/stats/TotalStatsDashboard/TotalStatsDashboard";
+import { getLatestWalkSession } from "@/db/queries";
+import LatestWalkDashboard from "@/components/stats/LatestWalkDashboard/LatestWalkDashboard";
 
 export default async function Home() {
   const allSessions = await getAllWalkSessions ()
@@ -14,6 +16,8 @@ export default async function Home() {
   console.log('Total steps: ' + totalStats.totalSteps);
   console.log('Total calories: ' + totalStats.totalCalories);
 
+  const lastSessions = await getLatestWalkSession();
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-start p-8 bg-gray-50 dark:bg-gray-900">
       <h1 className="text-3xl font-bold text-blue-600 mb-6">All Walk Sessions (Test)</h1>
@@ -25,6 +29,7 @@ export default async function Home() {
       <AddWalkForm />
       <WalkStatsChart stats={totalStats} />
       <TotalStatsDashboard stats={totalStats} />
+      <LatestWalkDashboard session={lastSessions} />
     </main>
   );
 }

@@ -13,3 +13,14 @@ export type WalkTotals = {
   totalSteps: number
   totalCalories: number
 }
+
+export type WalkSession = {
+  id: number;
+  date: string;
+  durationSec: number;
+  distanceKm: number;
+  steps: number;
+  avgSpeed: number;
+  calories?: number | null;
+  createdAt: string | null;
+}

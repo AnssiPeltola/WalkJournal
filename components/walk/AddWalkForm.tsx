@@ -5,49 +5,65 @@ import { addWalkSessionAction } from "@/app/actions";
 
 export default function AddWalkForm() {
   const today = new Date().toISOString().split("T")[0];
+
   const [date, setDate] = useState(today);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  const [distanceKm, setDistanceKm] = useState(0);
-  const [steps, setSteps] = useState(0);
-  const [calories, setCalories] = useState<number | "">("");
+  const [minutes, setMinutes] = useState('');
+  const [seconds, setSeconds] = useState('');
+  const [distanceKm, setDistanceKm] = useState('');
+  const [steps, setSteps] = useState('');
+  const [calories, setCalories] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Frontend validation (UX-level)
-    if (minutes < 0 || minutes > 99) {
+    const min = Number(minutes);
+    const sec = Number(seconds);
+    const distance = Number(distanceKm);
+    const stepsNum = Number(steps);
+    const caloriesNum = calories === '' ? undefined : Number(calories);
+
+    if (isNaN(min) || min < 0 || min > 99) {
       alert("Minutes must be between 0 and 99");
       return;
     }
 
-    if (seconds < 0 || seconds > 59) {
+    if (isNaN(sec) || sec < 0 || sec > 59) {
       alert("Seconds must be between 0 and 59");
       return;
     }
 
     // Calculates total seconds since database takes seconds in
-    const durationSec = minutes * 60 + seconds;
+    const durationSec = min * 60 + sec;
 
     if (durationSec <= 0) {
       alert("Duration must be greater than 0");
       return;
     }
 
+    if (isNaN(distance) || distance <= 0) {
+      alert("Distance must be greater than 0");
+      return;
+    }
+
+    if (isNaN(stepsNum) || stepsNum < 0) {
+      alert("Steps must be 0 or greater");
+      return;
+    }
+
     await addWalkSessionAction({
       date,
       durationSec,
-      distanceKm,
-      steps,
-      calories: calories === "" ? undefined : calories,
+      distanceKm: distance,
+      steps: stepsNum,
+      calories: caloriesNum,
     });
 
     // Reset form after data is sent to database
-    setMinutes(0);
-    setSeconds(0);
-    setDistanceKm(0);
-    setSteps(0);
-    setCalories("");
+    setMinutes('');
+    setSeconds('');
+    setDistanceKm('');
+    setSteps('');
+    setCalories('');
   };
 
   return (
@@ -73,10 +89,11 @@ export default function AddWalkForm() {
           <label className="block text-sm font-medium">Minutes</label>
           <input
             type="number"
+            placeholder="0–99"
             min={0}
             max={99}
             value={minutes}
-            onChange={(e) => setMinutes(Number(e.target.value))}
+            onChange={(e) => setMinutes(e.target.value)}
             className="w-full rounded border p-2"
           />
         </div>
@@ -85,10 +102,11 @@ export default function AddWalkForm() {
           <label className="block text-sm font-medium">Seconds</label>
           <input
             type="number"
+            placeholder="0–59"
             min={0}
             max={59}
             value={seconds}
-            onChange={(e) => setSeconds(Number(e.target.value))}
+            onChange={(e) => setSeconds(e.target.value)}
             className="w-full rounded border p-2"
           />
         </div>
@@ -98,9 +116,10 @@ export default function AddWalkForm() {
         <label className="block text-sm font-medium">Distance (km)</label>
         <input
           type="number"
-          step="0.1"
+          step="0.01"
+          placeholder="e.g. 3.25"
           value={distanceKm}
-          onChange={(e) => setDistanceKm(Number(e.target.value))}
+          onChange={(e) => setDistanceKm(e.target.value)}
           className="w-full rounded border p-2"
         />
       </div>
@@ -109,8 +128,9 @@ export default function AddWalkForm() {
         <label className="block text-sm font-medium">Steps</label>
         <input
           type="number"
+          placeholder="e.g. 4200"
           value={steps}
-          onChange={(e) => setSteps(Number(e.target.value))}
+          onChange={(e) => setSteps(e.target.value)}
           className="w-full rounded border p-2"
         />
       </div>
@@ -119,10 +139,9 @@ export default function AddWalkForm() {
         <label className="block text-sm font-medium">Calories (optional)</label>
         <input
           type="number"
+          placeholder="e.g. 300"
           value={calories}
-          onChange={(e) =>
-            setCalories(e.target.value === "" ? "" : Number(e.target.value))
-          }
+          onChange={(e) => setCalories(e.target.value)}
           className="w-full rounded border p-2"
         />
       </div>

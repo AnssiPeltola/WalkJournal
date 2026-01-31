@@ -1,9 +1,9 @@
-import { getAllWalkSessions, getWalkStats } from "@/db/queries";
+import { getAllWalkSessions, getWalkStats, getWalkStatsCurrentWeek, getLatestWalkSession } from "@/db/queries";
 import AddWalkForm from "@/components/walk/AddWalkForm";
-import WalkStatsChart from "@/components/charts/WalkStatsChart";
+// import WalkStatsChart from "@/components/charts/WalkStatsChart";
 import TotalStatsDashboard from "@/components/stats/TotalStatsDashboard/TotalStatsDashboard";
-import { getLatestWalkSession } from "@/db/queries";
 import LatestWalkDashboard from "@/components/stats/LatestWalkDashboard/LatestWalkDashboard";
+import CurrentWeekStatsDashboard from "@/components/stats/CurrentWeekStatsDashboard/CurrentWeekStatsDashboard";
 
 export default async function Home() {
   const allSessions = await getAllWalkSessions ()
@@ -17,6 +17,7 @@ export default async function Home() {
   console.log('Total calories: ' + totalStats.totalCalories);
 
   const lastSessions = await getLatestWalkSession();
+  const currentWeekStats = await getWalkStatsCurrentWeek();
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-start p-8 bg-gray-50 dark:bg-gray-900">
@@ -27,9 +28,13 @@ export default async function Home() {
       </pre>
 
       <AddWalkForm />
-      <WalkStatsChart stats={totalStats} />
+      {/* <WalkStatsChart stats={totalStats} /> */}
+      <h2 className="text-2xl font-bold mb-4">All Total Stats</h2>
       <TotalStatsDashboard stats={totalStats} />
+      <h2 className="text-2xl font-bold mb-4">Latest Walk Stats</h2>
       <LatestWalkDashboard session={lastSessions} />
+      <h2 className="text-2xl font-bold mb-4">Current Week Stats</h2>
+      <CurrentWeekStatsDashboard stats={currentWeekStats} />
     </main>
   );
 }

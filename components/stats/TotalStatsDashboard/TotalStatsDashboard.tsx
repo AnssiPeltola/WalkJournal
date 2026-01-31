@@ -11,6 +11,7 @@ export default function TotalStatsDashboard({ stats }: Props) {
     <section className="stats-grid">
       <StatCard label="Total Sessions" value={stats.totalSessions} />
       <StatCard label="Total Distance" value={`${stats.totalDistanceKm} km`} />
+      <StatCard label="Total Steps" value={stats.totalSteps} />
       <StatCard label="Total Time" value={formatDuration(stats.totalDurationSec)} />
       <StatCard label="Calories Burned" value={`${stats.totalCalories} kcal`} />
     </section>

@@ -1,7 +1,8 @@
 import { sql, desc } from 'drizzle-orm'
 import { db } from './client'
 import { walkSessions } from './schema'
-import { NewWalkSession, WalkTotals, WalkSession } from '@/types/walk'
+import { NewWalkSession, WalkTotals, WalkSession, WalkTotalsCurrentWeek} from '@/types/walk'
+import { getCurrentWeek } from '@/utils/getCurrentWeek'
 
 // Fetch all walking sessions from database
 export async function getAllWalkSessions() {
@@ -89,4 +90,21 @@ export async function getLatestWalkSession(): Promise<WalkSession | null> {
     console.error('Failed to fetch latest walk session:', err);
     return null;
   }
+}
+
+export async function getWalkStatsCurrentWeek(): Promise<WalkTotalsCurrentWeek> {
+  const { startOfWeek, endOfWeek } = getCurrentWeek();
+
+  const result = await db
+    .select({
+      totalSessions: sql<number>`count(*)`,
+      totalDurationSec: sql<number>`coalesce(sum(${walkSessions.durationSec}), 0)`,
+      totalDistanceKm: sql<number>`coalesce(sum(${walkSessions.distanceKm}), 0)`,
+      totalSteps: sql<number>`coalesce(sum(${walkSessions.steps}), 0)`,
+      totalCalories: sql<number>`coalesce(sum(${walkSessions.calories}), 0)`,
+    })
+    .from(walkSessions)
+    .where(sql`${walkSessions.date} >= ${startOfWeek} AND ${walkSessions.date} <= ${endOfWeek}`);
+
+  return result[0];
 }

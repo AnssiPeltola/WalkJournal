@@ -24,3 +24,11 @@ export type WalkSession = {
   calories?: number | null;
   createdAt: string | null;
 }
+
+export type WalkTotalsCurrentWeek = {
+  totalSessions: number
+  totalDurationSec: number
+  totalDistanceKm: number
+  totalSteps: number
+  totalCalories: number
+}

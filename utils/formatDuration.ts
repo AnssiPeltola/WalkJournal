@@ -9,3 +9,11 @@ export function formatDuration(totalSeconds: number): string {
 
   return `${minutes} min`
 }
+
+export function diffTime(current: number, last?: number): string | undefined {
+  if (last === undefined || last === null) return undefined;
+
+  const difference = current - last;
+  const sign = difference >= 0 ? '+' : '-';
+  return sign + ' ' + formatDuration(Math.abs(difference));
+}

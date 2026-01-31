@@ -1,4 +1,4 @@
-import { getAllWalkSessions, getWalkStats, getWalkStatsCurrentWeek, getLatestWalkSession } from "@/db/queries";
+import { getAllWalkSessions, getWalkStats, getWalkStatsCurrentWeek, getLatestWalkSession, getWalkStatsLastWeek } from "@/db/queries";
 import AddWalkForm from "@/components/walk/AddWalkForm";
 // import WalkStatsChart from "@/components/charts/WalkStatsChart";
 import TotalStatsDashboard from "@/components/stats/TotalStatsDashboard/TotalStatsDashboard";
@@ -18,6 +18,7 @@ export default async function Home() {
 
   const lastSessions = await getLatestWalkSession();
   const currentWeekStats = await getWalkStatsCurrentWeek();
+  const lastWeekStats = await getWalkStatsLastWeek();
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-start p-8 bg-gray-50 dark:bg-gray-900">
@@ -34,7 +35,7 @@ export default async function Home() {
       <h2 className="text-2xl font-bold mb-4">Latest Walk Stats</h2>
       <LatestWalkDashboard session={lastSessions} />
       <h2 className="text-2xl font-bold mb-4">Current Week Stats</h2>
-      <CurrentWeekStatsDashboard stats={currentWeekStats} />
+      <CurrentWeekStatsDashboard currentWeek={currentWeekStats} lastWeek={lastWeekStats} />
     </main>
   );
 }

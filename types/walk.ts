@@ -32,3 +32,11 @@ export type WalkTotalsCurrentWeek = {
   totalSteps: number
   totalCalories: number
 }
+
+export type WalkTotalsLastWeek = {
+  totalSessions: number;
+  totalDurationSec: number;
+  totalDistanceKm: number;
+  totalSteps: number;
+  totalCalories: number;
+};

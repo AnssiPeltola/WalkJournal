@@ -30,10 +30,10 @@ export default async function Home() {
   const dailyTotals = await getWalkDailyTotals(startDate, endDate);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-start p-8 bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen flex flex-col items-center justify-start p-8 bg-gray-300">
       <h1 className="text-3xl font-bold text-blue-600 mb-6">All Walk Sessions (Test)</h1>
 
-      <pre className="w-full max-w-4xl p-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow overflow-x-auto">
+      <pre className="w-full max-w-4xl p-4 bg-white text-gray-900 rounded-lg shadow overflow-x-auto">
         {JSON.stringify(totalStats, null, 2)}
       </pre>
 

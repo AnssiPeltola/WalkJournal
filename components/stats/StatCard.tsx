@@ -5,8 +5,8 @@ type StatCardProps = {
 
 export default function StatCard({ label, value }: StatCardProps) {
   return (
-    <div className="p-4 bg-white rounded shadow text-center">
-      <p className="text-sm text-gray-500">{label}</p>
+    <div className="p-4 m-1 bg-white rounded shadow text-center">
+      <p className="text-sm">{label}</p>
       <p className="text-2xl font-bold">{value}</p>
     </div>
   )

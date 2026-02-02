@@ -1,52 +1,54 @@
-import { WalkTotals } from '@/types/walk';
+import { WalkTotalsCurrentWeek } from '@/types/walk';
 import { formatDuration, diffTime } from '@/utils/formatDuration';
 import StatCardWithDiff from '../StatCardWithDiff';
 
 type Props = {
-  currentWeek: WalkTotals | null;
-  lastWeek: WalkTotals | null;
+  currentWeek: WalkTotalsCurrentWeek | null;
+  lastWeek: WalkTotalsCurrentWeek | null;
 };
 
 export default function CurrentWeekStatsDashboard({ currentWeek, lastWeek }: Props) {
-  if (!currentWeek || currentWeek.totalSessions === 0) {
-    return (
-      <p className="text-center text-gray-500">
-        No walk sessions recorded this week.
-      </p>
-    );
-  }
+  const emptyTotals: WalkTotalsCurrentWeek = {
+    totalSessions: 0,
+    totalDurationSec: 0,
+    totalDistanceKm: 0,
+    totalSteps: 0,
+    totalCalories: 0,
+  };
 
-  const diff = (current: number, last?: number, decimals = 0) =>
-  last !== undefined && last !== null
-    ? Number((current - last).toFixed(decimals))
-    : undefined;
+  const current = currentWeek ?? emptyTotals;
+
+  const diff = (value: number, last?: number, decimals = 0) =>
+    last !== undefined && last !== null
+      ? Number((value - last).toFixed(decimals))
+      : undefined;
 
   return (
     <section className="stats-grid">
       <StatCardWithDiff
         label="Total Sessions"
-        value={currentWeek.totalSessions}
-        diff={diff(currentWeek.totalSessions, lastWeek?.totalSessions)}
+        value={current.totalSessions}
+        diff={diff(current.totalSessions, lastWeek?.totalSessions)}
       />
       <StatCardWithDiff
         label="Total Distance"
-        value={`${currentWeek.totalDistanceKm} km`}
-        diff={diff(currentWeek.totalDistanceKm, lastWeek?.totalDistanceKm, 2)}
+        value={`${current.totalDistanceKm} km`}
+        diff={diff(current.totalDistanceKm, lastWeek?.totalDistanceKm, 2)}
       />
       <StatCardWithDiff
         label="Total Steps"
-        value={currentWeek.totalSteps}
-        diff={diff(currentWeek.totalSteps, lastWeek?.totalSteps)}
+        value={current.totalSteps}
+        diff={diff(current.totalSteps, lastWeek?.totalSteps)}
       />
       <StatCardWithDiff
         label="Total Time"
-        value={formatDuration(currentWeek.totalDurationSec)}
-        diff={diffTime(currentWeek.totalDurationSec, lastWeek?.totalDurationSec)}
+        value={formatDuration(current.totalDurationSec)}
+        diff={diffTime(current.totalDurationSec, lastWeek?.totalDurationSec)}
       />
       <StatCardWithDiff
         label="Total Calories"
-        value={currentWeek.totalCalories ?? '-'}
-        diff={diff(currentWeek.totalCalories ?? 0, lastWeek?.totalCalories)}
+        value={current.totalCalories}
+        diff={diff(current.totalCalories, lastWeek?.totalCalories)}
       />
     </section>
   );

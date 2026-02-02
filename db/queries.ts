@@ -1,7 +1,7 @@
 import { sql, desc } from 'drizzle-orm'
 import { db } from './client'
 import { walkSessions } from './schema'
-import { NewWalkSession, WalkTotals, WalkSession, WalkTotalsCurrentWeek, WalkTotalsLastWeek } from '@/types/walk'
+import { NewWalkSession, WalkDailyTotal, WalkTotals, WalkSession, WalkTotalsCurrentWeek, WalkTotalsLastWeek } from '@/types/walk'
 import { getCurrentWeek } from '@/utils/getCurrentWeek'
 import { getLastWeekDates } from '@/utils/getLastWeek'
 
@@ -125,4 +125,24 @@ export async function getWalkStatsLastWeek(): Promise<WalkTotalsLastWeek> {
     .where(sql`${walkSessions.date} >= ${startOfWeek} AND ${walkSessions.date} <= ${endOfWeek}`);
 
   return result[0];
+}
+
+export async function getWalkDailyTotals(
+  startDate: string,
+  endDate: string
+): Promise<WalkDailyTotal[]> {
+  try {
+    return await db
+      .select({
+        date: walkSessions.date,
+        totalDistanceKm: sql<number>`coalesce(sum(${walkSessions.distanceKm}), 0)`,
+      })
+      .from(walkSessions)
+      .where(sql`${walkSessions.date} >= ${startDate} AND ${walkSessions.date} <= ${endDate}`)
+      .groupBy(walkSessions.date)
+      .orderBy(walkSessions.date)
+  } catch (err) {
+    console.error('Failed to fetch daily walk totals:', err)
+    return []
+  }
 }

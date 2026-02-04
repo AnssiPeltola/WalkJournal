@@ -19,6 +19,11 @@ export type WalkDailyTotal = {
   totalDistanceKm: number
 }
 
+export type DistanceTrendPoint = {
+  label: string
+  totalKm: number
+}
+
 export type WalkSession = {
   id: number;
   date: string;

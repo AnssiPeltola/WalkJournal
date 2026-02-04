@@ -1,9 +1,11 @@
 import { sql, desc } from 'drizzle-orm'
 import { db } from './client'
 import { walkSessions } from './schema'
-import { NewWalkSession, WalkDailyTotal, WalkTotals, WalkSession, WalkTotalsCurrentWeek, WalkTotalsLastWeek } from '@/types/walk'
+import { DistanceTrendPoint, NewWalkSession, WalkDailyTotal, WalkTotals, WalkSession, WalkTotalsCurrentWeek, WalkTotalsLastWeek } from '@/types/walk'
 import { getCurrentWeek } from '@/utils/getCurrentWeek'
 import { getLastWeekDates } from '@/utils/getLastWeek'
+import { getLastSixWeeks } from '@/utils/getLastSixWeeks'
+import { getLastSixMonths } from '@/utils/getLastSixMonths'
 
 // Fetch all walking sessions from database
 export async function getAllWalkSessions() {
@@ -145,4 +147,48 @@ export async function getWalkDailyTotals(
     console.error('Failed to fetch daily walk totals:', err)
     return []
   }
+}
+
+export async function getWeeklyDistanceTotals(): Promise<DistanceTrendPoint[]> {
+  const weeks = getLastSixWeeks()
+
+  const results = await Promise.all(
+    weeks.map(async (week) => {
+      const total = await db
+        .select({
+          totalKm: sql<number>`coalesce(sum(${walkSessions.distanceKm}), 0)`,
+        })
+        .from(walkSessions)
+        .where(sql`${walkSessions.date} >= ${week.startDate} AND ${walkSessions.date} <= ${week.endDate}`)
+
+      return {
+        label: week.label,
+        totalKm: total[0]?.totalKm ?? 0,
+      }
+    })
+  )
+
+  return results
+}
+
+export async function getMonthlyDistanceTotals(): Promise<DistanceTrendPoint[]> {
+  const months = getLastSixMonths()
+
+  const results = await Promise.all(
+    months.map(async (month) => {
+      const total = await db
+        .select({
+          totalKm: sql<number>`coalesce(sum(${walkSessions.distanceKm}), 0)`,
+        })
+        .from(walkSessions)
+        .where(sql`${walkSessions.date} >= ${month.startDate} AND ${walkSessions.date} <= ${month.endDate}`)
+
+      return {
+        label: month.label,
+        totalKm: total[0]?.totalKm ?? 0,
+      }
+    })
+  )
+
+  return results
 }

@@ -1,25 +1,28 @@
-import { getAllWalkSessions, getWalkDailyTotals, getWalkStats, getWalkStatsCurrentWeek, getLatestWalkSession, getWalkStatsLastWeek } from "@/db/queries";
+import { getAllWalkSessions, getMonthlyDistanceTotals, getWalkDailyTotals, getWalkStats, getWalkStatsCurrentWeek, getLatestWalkSession, getWalkStatsLastWeek, getWeeklyDistanceTotals } from "@/db/queries";
 import AddWalkForm from "@/components/walk/AddWalkForm";
 // import WalkStatsChart from "@/components/charts/WalkStatsChart";
 import WalkHeatmapChart from "@/components/charts/WalkHeatmapChart";
+import DistanceTrendChart from "@/components/charts/DistanceTrendChart";
 import TotalStatsDashboard from "@/components/stats/TotalStatsDashboard/TotalStatsDashboard";
 import LatestWalkDashboard from "@/components/stats/LatestWalkDashboard/LatestWalkDashboard";
 import CurrentWeekStatsDashboard from "@/components/stats/CurrentWeekStatsDashboard/CurrentWeekStatsDashboard";
 
 export default async function Home() {
-  const allSessions = await getAllWalkSessions ()
-  console.log('All walk sessions:', allSessions)
+  // const allSessions = await getAllWalkSessions ()
+  // console.log('All walk sessions:', allSessions)
 
   const totalStats = await getWalkStats();
-  console.log('Total sessions: ' + totalStats.totalSessions);
-  console.log('Total durationSec: ' + totalStats.totalDurationSec);
-  console.log('Total distanceKm: ' + totalStats.totalDistanceKm);
-  console.log('Total steps: ' + totalStats.totalSteps);
-  console.log('Total calories: ' + totalStats.totalCalories);
+  // console.log('Total sessions: ' + totalStats.totalSessions);
+  // console.log('Total durationSec: ' + totalStats.totalDurationSec);
+  // console.log('Total distanceKm: ' + totalStats.totalDistanceKm);
+  // console.log('Total steps: ' + totalStats.totalSteps);
+  // console.log('Total calories: ' + totalStats.totalCalories);
 
   const lastSessions = await getLatestWalkSession();
   const currentWeekStats = await getWalkStatsCurrentWeek();
   const lastWeekStats = await getWalkStatsLastWeek();
+  const weeklyDistanceTotals = await getWeeklyDistanceTotals();
+  const monthlyDistanceTotals = await getMonthlyDistanceTotals();
 
   const now = new Date();
   const year = now.getUTCFullYear();
@@ -44,6 +47,10 @@ export default async function Home() {
         startDate={startDate}
         endDate={endDate}
         title={`Walk Distance Heatmap (${year})`}
+      />
+      <DistanceTrendChart
+        weeklyData={weeklyDistanceTotals}
+        monthlyData={monthlyDistanceTotals}
       />
       <h2 className="text-2xl font-bold mb-4">All Total Stats</h2>
       <TotalStatsDashboard stats={totalStats} />

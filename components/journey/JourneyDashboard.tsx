@@ -9,7 +9,7 @@ type JourneyDashboardProps = {
 
 export default function JourneyDashboard({ progress, isLoading = false }: JourneyDashboardProps) {
   return (
-    <section className="w-full max-w-5xl mx-auto grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+    <section className="w-full grid gap-6">
       <ProgressCard progress={progress} isLoading={isLoading} />
       <JourneyTimeline legs={progress?.legs ?? []} isLoading={isLoading} />
     </section>

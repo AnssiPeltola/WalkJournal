@@ -7,7 +7,7 @@ import DistanceTrendChart from "@/components/charts/DistanceTrendChart";
 import TotalStatsDashboard from "@/components/stats/TotalStatsDashboard/TotalStatsDashboard";
 import LatestWalkDashboard from "@/components/stats/LatestWalkDashboard/LatestWalkDashboard";
 import CurrentWeekStatsDashboard from "@/components/stats/CurrentWeekStatsDashboard/CurrentWeekStatsDashboard";
-import { JourneyDashboard } from "@/components/journey";
+import { JourneyDashboard, JourneyMap } from "@/components/journey";
 
 export default async function Home() {
   // const allSessions = await getAllWalkSessions ()
@@ -44,9 +44,12 @@ export default async function Home() {
       </pre>
 
       <AddWalkForm />
-      <section className="w-full max-w-5xl">
+      <section className="w-full max-w-6xl">
         <h2 className="text-2xl font-bold mb-4">Journey Progress</h2>
-        <JourneyDashboard progress={journeyProgress} />
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+          <JourneyDashboard progress={journeyProgress} />
+          <JourneyMap progress={journeyProgress} />
+        </div>
       </section>
       {/* <WalkStatsChart stats={totalStats} /> */}
       <WalkHeatmapChart

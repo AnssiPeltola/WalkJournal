@@ -1,4 +1,5 @@
-import { getAllWalkSessions, getMonthlyDistanceTotals, getWalkDailyTotals, getWalkStats, getWalkStatsCurrentWeek, getLatestWalkSession, getWalkStatsLastWeek, getWeeklyDistanceTotals } from "@/db/queries";
+import { getMonthlyDistanceTotals, getWalkDailyTotals, getWalkStats, getWalkStatsCurrentWeek, getLatestWalkSession, getWalkStatsLastWeek, getWeeklyDistanceTotals } from "@/db/queries";
+import { getJourneyProgressAction } from "@/app/actions";
 import AddWalkForm from "@/components/walk/AddWalkForm";
 // import WalkStatsChart from "@/components/charts/WalkStatsChart";
 import WalkHeatmapChart from "@/components/charts/WalkHeatmapChart";
@@ -6,6 +7,7 @@ import DistanceTrendChart from "@/components/charts/DistanceTrendChart";
 import TotalStatsDashboard from "@/components/stats/TotalStatsDashboard/TotalStatsDashboard";
 import LatestWalkDashboard from "@/components/stats/LatestWalkDashboard/LatestWalkDashboard";
 import CurrentWeekStatsDashboard from "@/components/stats/CurrentWeekStatsDashboard/CurrentWeekStatsDashboard";
+import { JourneyDashboard } from "@/components/journey";
 
 export default async function Home() {
   // const allSessions = await getAllWalkSessions ()
@@ -23,6 +25,7 @@ export default async function Home() {
   const lastWeekStats = await getWalkStatsLastWeek();
   const weeklyDistanceTotals = await getWeeklyDistanceTotals();
   const monthlyDistanceTotals = await getMonthlyDistanceTotals();
+  const journeyProgress = await getJourneyProgressAction();
 
   const now = new Date();
   const year = now.getUTCFullYear();
@@ -41,6 +44,10 @@ export default async function Home() {
       </pre>
 
       <AddWalkForm />
+      <section className="w-full max-w-5xl">
+        <h2 className="text-2xl font-bold mb-4">Journey Progress</h2>
+        <JourneyDashboard progress={journeyProgress} />
+      </section>
       {/* <WalkStatsChart stats={totalStats} /> */}
       <WalkHeatmapChart
         dailyTotals={dailyTotals}

@@ -1,0 +1,32 @@
+id,order_index,name,start_city,end_city,start_lat,start_lng,end_lat,end_lng,segment_km
+1,1,Tampere-Valkeakoski,Tampere,Valkeakoski,61.49809,23.76072,61.26556,24.03047,37
+2,2,Valkeakoski-Hämeenlinna,Valkeakoski,Hämeenlinna,61.26556,24.03047,60.996624,24.465142,46
+3,3,Hämeenlinna-Riihimäki,Hämeenlinna,Riihimäki,60.996624,24.465142,60.739007,24.772829,39
+4,4,Riihimäki-Järvenpää,Riihimäki,Järvenpää,60.739007,24.772829,60.47113,25.08758,37
+5,5,Järvenpää-Vantaa,Järvenpää,Vantaa,60.47113,25.08758,60.292964,25.043668,23
+6,6,Vantaa-Helsinki,Vantaa,Helsinki,60.292964,25.043668,60.16663,24.94351,17
+7,7,Helsinki-Tallinn,Helsinki,Tallinn,60.16663,24.94351,59.437256,24.757261,87
+8,8,Tallinn-Rapla,Tallinn,Rapla,59.437256,24.757261,59.00596,24.79438,56
+9,9,Rapla-Eidapere,Rapla,Eidapere,59.00596,24.79438,58.754029,24.944286,33
+10,10,Eidapere-Pärnu,Eidapere,Pärnu,58.754029,24.944286,58.38777,24.50277,64
+11,11,Pärnu-Latvia border,Pärnu,Latvia border,58.38777,24.50277,57.874314,24.381114,67
+12,12,Latvia border-Salatsi,Latvia border,Salatsi,57.874314,24.381114,57.756783,24.357033,19
+13,13,Salatsi-Saulkrasti,Salatsi,Saulkrasti,57.756783,24.357033,57.263407,24.415242,59
+14,14,Saulkrasti-Riga,Saulkrasti,Riga,57.263407,24.415242,56.949407,24.105187,49
+15,15,Riga-Bauska,Riga,Bauska,56.949407,24.105187,56.408298,24.187689,75
+16,16,Bauska-Lithuania border,Bauska,Lithuania border,56.408298,24.187689,56.261922,24.194083,17
+17,17,Lithuania border-Panevėžys,Lithuania border,Panevėžys,56.261922,24.194083,55.734514,24.357805,68
+18,18,Panevėžys-Ukmergė,Panevėžys,Ukmergė,55.734514,24.357805,55.24776,24.759965,77
+19,19,Ukmergė-Vilnius,Ukmergė,Vilnius,55.24776,24.759965,54.687061,25.282905,84
+20,20,Vilnius-Rūdiškės,Vilnius,Rūdiškės,54.687061,25.282905,54.520991,24.831762,41
+21,21,Rūdiškės-Alytus,Rūdiškės,Alytus,54.520991,24.831762,54.396144,24.045939,64
+22,22,Alytus-Poland border,Alytus,Poland border,54.396144,24.045939,54.12846,23.49407,56
+23,23,Poland border-Sejny,Poland border,Sejny,54.12846,23.49407,54.105738,23.349654,11
+24,24,Sejny-Suwałki,Sejny,Suwałki,54.105738,23.349654,54.102716,22.931881,30
+25,25,Suwałki-Augustów,Suwałki,Augustów,54.102716,22.931881,53.843754,22.980233,34
+26,26,Augustów-Grajewo,Augustów,Grajewo,53.843754,22.980233,53.647,22.454864,43
+27,27,Grajewo-Łomża,Grajewo,Łomża,53.647,22.454864,53.175081,22.072756,65
+28,28,Łomża-Ostrów Mazowiecka,Łomża,Ostrów Mazowiecka,53.175081,22.072756,52.800048,21.897632,51
+29,29,Ostrów Mazowiecka-Wyszków,Ostrów Mazowiecka,Wyszków,52.800048,21.897632,52.592829,21.458445,41
+30,30,Wyszków-Radzymin,Wyszków,Radzymin,52.592829,21.458445,52.417642,21.180782,32
+31,31,Radzymin-Warsaw,Radzymin,Warsaw,52.417642,21.180782,52.231964,21.006731,26

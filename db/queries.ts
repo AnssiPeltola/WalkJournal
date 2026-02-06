@@ -1,6 +1,6 @@
 import { sql, desc } from 'drizzle-orm'
 import { db } from './client'
-import { walkSessions } from './schema'
+import { goals, walkSessions } from './schema'
 import { DistanceTrendPoint, NewWalkSession, WalkDailyTotal, WalkTotals, WalkSession, WalkTotalsCurrentWeek, WalkTotalsLastWeek } from '@/types/walk'
 import { getCurrentWeek } from '@/utils/getCurrentWeek'
 import { getLastWeekDates } from '@/utils/getLastWeek'
@@ -13,6 +13,16 @@ export async function getAllWalkSessions() {
     return await db.select().from(walkSessions)
   } catch (err) {
     console.error('Failed to fetch walk sessions:', err)
+    return []
+  }
+}
+
+// Fetch all goals ordered by route sequence
+export async function getAllGoalsOrdered() {
+  try {
+    return await db.select().from(goals).orderBy(goals.orderIndex)
+  } catch (err) {
+    console.error('Failed to fetch goals:', err)
     return []
   }
 }

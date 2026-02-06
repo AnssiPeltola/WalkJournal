@@ -65,19 +65,19 @@ export default function JourneyMapClient({ progress }: JourneyMapClientProps) {
     : routePositions[0] ?? [0, 0]
 
   return (
-    <section className="w-full rounded-2xl bg-white p-3 shadow-md border border-slate-200">
+    <section className="w-full h-full rounded-2xl bg-white p-3 shadow-md border border-slate-200">
       <MapContainer
         center={center}
-        zoom={6}
+        zoom={8}
         scrollWheelZoom={false}
-        className="h-72 w-full rounded-xl sm:h-80 lg:h-105"
+        className="h-72 w-full rounded-xl sm:h-80 lg:h-full"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {routePositions.length > 1 && (
-          <Polyline positions={routePositions} pathOptions={{ color: '#10b981', weight: 4 }} />
+          <Polyline positions={routePositions} pathOptions={{ color: '#0F52BA', weight: 4 }} />
         )}
         {currentPosition && (
           <Marker position={[currentPosition.lat, currentPosition.lng]} />

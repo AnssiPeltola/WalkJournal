@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useMemo, useState } from 'react'
 import { JourneyLegProgress } from '@/types/goals'
 
 type JourneyTimelineProps = {
@@ -11,6 +14,34 @@ function formatKm(value: number, fractionDigits = 0): string {
 }
 
 export default function JourneyTimeline({ legs, isLoading = false }: JourneyTimelineProps) {
+  const baseWindowSize = 5
+  const expandStep = 5
+
+  const initialWindow = useMemo(() => {
+    if (!legs.length) return { start: 0, end: 0 }
+
+    const currentIndex = legs.findIndex((leg) => leg.status === 'current')
+    const upcomingIndex = legs.findIndex((leg) => leg.status === 'upcoming')
+    const anchorIndex = currentIndex >= 0 ? currentIndex : (upcomingIndex >= 0 ? upcomingIndex : legs.length - 1)
+
+    let start = Math.max(0, anchorIndex - 2)
+    let end = start + baseWindowSize
+    if (end > legs.length) {
+      end = legs.length
+      start = Math.max(0, end - baseWindowSize)
+    }
+
+    return { start, end }
+  }, [legs])
+
+  const [visibleStart, setVisibleStart] = useState(initialWindow.start)
+  const [visibleEnd, setVisibleEnd] = useState(initialWindow.end)
+
+  useEffect(() => {
+    setVisibleStart(initialWindow.start)
+    setVisibleEnd(initialWindow.end)
+  }, [initialWindow])
+
   if (isLoading) {
     return (
       <section className="w-full rounded-2xl bg-white p-5 shadow-md border border-slate-200 animate-pulse">
@@ -32,11 +63,15 @@ export default function JourneyTimeline({ legs, isLoading = false }: JourneyTime
     )
   }
 
+  const visibleLegs = legs.slice(visibleStart, visibleEnd)
+  const canShowEarlier = visibleStart > 0
+  const canShowLater = visibleEnd < legs.length
+
   return (
     <section className="w-full rounded-2xl bg-white p-5 shadow-md border border-slate-200">
       <h3 className="text-lg font-semibold text-slate-900">Route Timeline</h3>
       <ol className="mt-4 space-y-3">
-        {legs.map((leg) => {
+        {visibleLegs.map((leg) => {
           const isCompleted = leg.status === 'completed'
           const isCurrent = leg.status === 'current'
           const dotClass = isCompleted
@@ -66,6 +101,26 @@ export default function JourneyTimeline({ legs, isLoading = false }: JourneyTime
           )
         })}
       </ol>
+      {(canShowEarlier || canShowLater) && (
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setVisibleStart((start) => Math.max(0, start - expandStep))}
+            className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={!canShowEarlier}
+          >
+            Show earlier
+          </button>
+          <button
+            type="button"
+            onClick={() => setVisibleEnd((end) => Math.min(legs.length, end + expandStep))}
+            className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={!canShowLater}
+          >
+            Show later
+          </button>
+        </div>
+      )}
     </section>
   )
 }

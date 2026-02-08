@@ -1,6 +1,6 @@
  'use client'
 
-import { JourneyProgress } from '@/types/goals'
+import { JourneyLegProgress, JourneyProgress } from '@/types/goals'
 import dynamic from 'next/dynamic'
 
 const JourneyMapClient = dynamic(() => import('./JourneyMapClient'), {
@@ -9,8 +9,9 @@ const JourneyMapClient = dynamic(() => import('./JourneyMapClient'), {
 
 type JourneyMapProps = {
   progress: JourneyProgress | null
+  selectedLeg?: JourneyLegProgress | null
 }
 
-export default function JourneyMap({ progress }: JourneyMapProps) {
-  return <JourneyMapClient progress={progress} />
+export default function JourneyMap({ progress, selectedLeg = null }: JourneyMapProps) {
+  return <JourneyMapClient progress={progress} selectedLeg={selectedLeg} />
 }

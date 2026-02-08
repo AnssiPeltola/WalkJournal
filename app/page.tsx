@@ -29,6 +29,8 @@ export default async function Home() {
     <main className="min-h-screen flex flex-col items-center justify-start p-8 bg-gray-300">
       <h2 className="text-2xl font-bold mb-4">All Total Stats</h2>
       <TotalStatsDashboard stats={totalStats} />
+      <h2 className="text-2xl font-bold mb-4">Current Week Stats</h2>
+      <CurrentWeekStatsDashboard currentWeek={currentWeekStats} lastWeek={lastWeekStats} />
       <AddWalkForm />
       <section className="w-full max-w-6xl">
         <h2 className="text-2xl font-bold mb-4">Journey Progress</h2>
@@ -46,8 +48,6 @@ export default async function Home() {
       />
       <h2 className="text-2xl font-bold mb-4">Latest Walk Stats</h2>
       <LatestWalkDashboard session={lastSessions} />
-      <h2 className="text-2xl font-bold mb-4">Current Week Stats</h2>
-      <CurrentWeekStatsDashboard currentWeek={currentWeekStats} lastWeek={lastWeekStats} />
     </main>
   );
 }

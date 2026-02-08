@@ -10,3 +10,24 @@ export function formatDateTimeUTCToHelsinki(dateTime: string | null): string {
     timeZone: 'Europe/Helsinki',
   });
 }
+
+export function formatDateToFinnish(date: string | null): string {
+  if (!date) return '-';
+
+  const parts = date.split('-');
+  if (parts.length === 3) {
+    const [year, month, day] = parts;
+    if (year && month && day) {
+      return `${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`;
+    }
+  }
+
+  const parsed = new Date(date);
+  if (Number.isNaN(parsed.getTime())) return '-';
+
+  const day = String(parsed.getDate()).padStart(2, '0');
+  const month = String(parsed.getMonth() + 1).padStart(2, '0');
+  const year = parsed.getFullYear();
+
+  return `${day}.${month}.${year}`;
+}

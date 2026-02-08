@@ -1,7 +1,6 @@
 import { getMonthlyDistanceTotals, getWalkDailyTotals, getWalkStats, getWalkStatsCurrentWeek, getLatestWalkSession, getWalkStatsLastWeek, getWeeklyDistanceTotals } from "@/db/queries";
 import { getJourneyProgressAction } from "@/app/actions";
 import AddWalkForm from "@/components/walk/AddWalkForm";
-// import WalkStatsChart from "@/components/charts/WalkStatsChart";
 import WalkHeatmapChart from "@/components/charts/WalkHeatmapChart";
 import DistanceTrendChart from "@/components/charts/DistanceTrendChart";
 import TotalStatsDashboard from "@/components/stats/TotalStatsDashboard/TotalStatsDashboard";
@@ -10,16 +9,7 @@ import CurrentWeekStatsDashboard from "@/components/stats/CurrentWeekStatsDashbo
 import { JourneySection } from "@/components/journey";
 
 export default async function Home() {
-  // const allSessions = await getAllWalkSessions ()
-  // console.log('All walk sessions:', allSessions)
-
   const totalStats = await getWalkStats();
-  // console.log('Total sessions: ' + totalStats.totalSessions);
-  // console.log('Total durationSec: ' + totalStats.totalDurationSec);
-  // console.log('Total distanceKm: ' + totalStats.totalDistanceKm);
-  // console.log('Total steps: ' + totalStats.totalSteps);
-  // console.log('Total calories: ' + totalStats.totalCalories);
-
   const lastSessions = await getLatestWalkSession();
   const currentWeekStats = await getWalkStatsCurrentWeek();
   const lastWeekStats = await getWalkStatsLastWeek();
@@ -37,18 +27,11 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-start p-8 bg-gray-300">
-      <h1 className="text-3xl font-bold text-blue-600 mb-6">All Walk Sessions (Test)</h1>
-
-      <pre className="w-full max-w-4xl p-4 bg-white text-gray-900 rounded-lg shadow overflow-x-auto">
-        {JSON.stringify(totalStats, null, 2)}
-      </pre>
-
       <AddWalkForm />
       <section className="w-full max-w-6xl">
         <h2 className="text-2xl font-bold mb-4">Journey Progress</h2>
         <JourneySection progress={journeyProgress} />
       </section>
-      {/* <WalkStatsChart stats={totalStats} /> */}
       <WalkHeatmapChart
         dailyTotals={dailyTotals}
         startDate={startDate}

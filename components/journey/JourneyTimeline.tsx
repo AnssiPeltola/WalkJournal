@@ -15,7 +15,6 @@ function formatKm(value: number, fractionDigits = 0): string {
 
 export default function JourneyTimeline({ legs, isLoading = false }: JourneyTimelineProps) {
   const baseWindowSize = 5
-  const expandStep = 5
 
   const initialWindow = useMemo(() => {
     if (!legs.length) return { start: 0, end: 0 }
@@ -35,11 +34,9 @@ export default function JourneyTimeline({ legs, isLoading = false }: JourneyTime
   }, [legs])
 
   const [visibleStart, setVisibleStart] = useState(initialWindow.start)
-  const [visibleEnd, setVisibleEnd] = useState(initialWindow.end)
 
   useEffect(() => {
     setVisibleStart(initialWindow.start)
-    setVisibleEnd(initialWindow.end)
   }, [initialWindow])
 
   if (isLoading) {
@@ -63,6 +60,7 @@ export default function JourneyTimeline({ legs, isLoading = false }: JourneyTime
     )
   }
 
+  const visibleEnd = Math.min(legs.length, visibleStart + baseWindowSize)
   const visibleLegs = legs.slice(visibleStart, visibleEnd)
   const canShowEarlier = visibleStart > 0
   const canShowLater = visibleEnd < legs.length
@@ -105,7 +103,7 @@ export default function JourneyTimeline({ legs, isLoading = false }: JourneyTime
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <button
             type="button"
-            onClick={() => setVisibleStart((start) => Math.max(0, start - expandStep))}
+            onClick={() => setVisibleStart((start) => Math.max(0, start - baseWindowSize))}
             className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
             disabled={!canShowEarlier}
           >
@@ -113,7 +111,7 @@ export default function JourneyTimeline({ legs, isLoading = false }: JourneyTime
           </button>
           <button
             type="button"
-            onClick={() => setVisibleEnd((end) => Math.min(legs.length, end + expandStep))}
+            onClick={() => setVisibleStart((start) => Math.min(Math.max(0, legs.length - baseWindowSize), start + baseWindowSize))}
             className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
             disabled={!canShowLater}
           >

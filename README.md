@@ -8,6 +8,11 @@ WalkJournal is a personal walking log built to track treadmill and outdoor sessi
 - Year heatmap for daily distance
 - Journey progress section with map and route legs
 
+## Screenshots
+![Dashboard](public/screenshots/screenshot1.png)
+![Journey Map](public/screenshots/screenshot2.png)
+![HeatMap & Charts](public/screenshots/screenshot3.png)
+
 ## Tech Stack
 
 - **Next.js** (App Router)

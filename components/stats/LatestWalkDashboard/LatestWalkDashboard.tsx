@@ -13,7 +13,7 @@ export default function LatestWalkDashboard({ session }: Props) {
   if (!session) return <p>No walk sessions yet.</p>;
 
   return (
-    <section className="grid w-full max-w-3xl grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-3">
+    <section className="grid w-full grid-cols-1 gap-x-3 gap-y-3 sm:w-fit sm:grid-cols-[repeat(3,12rem)]">
       <StatCard label="Created At" value={formatDateToFinnish(session.date)} />
       <StatCard label="Distance" value={`${session.distanceKm} km`} />
       <StatCard label="Steps" value={session.steps} />

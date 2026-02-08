@@ -32,7 +32,7 @@ export default async function Home() {
       <h2 className="text-2xl font-bold mb-4">Current Week Stats</h2>
       <CurrentWeekStatsDashboard currentWeek={currentWeekStats} lastWeek={lastWeekStats} />
       <section className="w-full max-w-6xl">
-        <div className="flex w-full flex-col items-center gap-8 lg:flex-row lg:items-start">
+        <div className="flex w-full flex-col items-center gap-8 lg:flex-row lg:items-start mb-5">
           <AddWalkForm />
           <div className="w-full max-w-3xl">
             <h2 className="text-2xl font-bold mb-4">Latest Walk Stats</h2>
@@ -40,7 +40,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      <section className="w-full max-w-6xl">
+      <section className="w-full max-w-6xl mb-5">
         <h2 className="text-2xl font-bold mb-4">Journey Progress</h2>
         <JourneySection progress={journeyProgress} />
       </section>

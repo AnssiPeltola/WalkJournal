@@ -238,7 +238,7 @@ export default function WalkHeatmapChart({
   }
 
   return (
-    <section className="w-full max-w-5xl rounded-lg bg-white p-4 shadow">
+    <section className="w-full max-w-5xl rounded-lg bg-white p-4 shadow mb-5">
       <h2 className="mb-4 text-lg font-semibold text-gray-900">{title}</h2>
       <div className="relative h-40 w-full">
         <Chart type="matrix" data={data} options={options} />

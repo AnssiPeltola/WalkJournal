@@ -8,7 +8,7 @@ type Props = {
 
 export default function TotalStatsDashboard({ stats }: Props) {
   return (
-    <section className="flex flex-wrap justify-center gap-2">
+    <section className="flex flex-wrap justify-start gap-2 mb-2">
       <StatCard label="Total Sessions" value={stats.totalSessions} />
       <StatCard label="Total Distance" value={`${stats.totalDistanceKm} km`} />
       <StatCard label="Total Steps" value={stats.totalSteps} />

@@ -6,6 +6,8 @@ import { JourneyLegProgress } from '@/types/goals'
 type JourneyTimelineProps = {
   legs: JourneyLegProgress[]
   isLoading?: boolean
+  selectedLegId?: number | null
+  onSelectLegId?: (legId: number | null) => void
 }
 
 function formatKm(value: number, fractionDigits = 0): string {
@@ -13,7 +15,12 @@ function formatKm(value: number, fractionDigits = 0): string {
   return safeValue.toFixed(fractionDigits)
 }
 
-export default function JourneyTimeline({ legs, isLoading = false }: JourneyTimelineProps) {
+export default function JourneyTimeline({
+  legs,
+  isLoading = false,
+  selectedLegId = null,
+  onSelectLegId,
+}: JourneyTimelineProps) {
   const baseWindowSize = 5
 
   const initialWindow = useMemo(() => {
@@ -72,6 +79,7 @@ export default function JourneyTimeline({ legs, isLoading = false }: JourneyTime
         {visibleLegs.map((leg) => {
           const isCompleted = leg.status === 'completed'
           const isCurrent = leg.status === 'current'
+          const isSelected = selectedLegId === leg.goal.id
           const dotClass = isCompleted
             ? 'bg-emerald-500'
             : isCurrent
@@ -82,19 +90,29 @@ export default function JourneyTimeline({ legs, isLoading = false }: JourneyTime
             : isCurrent
               ? 'text-slate-900 font-medium'
               : 'text-slate-500'
+          const rowClass = isSelected
+            ? 'border-blue-200 bg-blue-50'
+            : 'border-transparent hover:bg-slate-50'
 
           return (
-            <li key={leg.goal.id} className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className={`h-2.5 w-2.5 rounded-full ${dotClass}`} aria-hidden="true" />
-                <div>
-                  <p className={`text-sm ${textClass}`}>
-                    {leg.goal.startCity} to {leg.goal.endCity}
-                  </p>
-                  <p className="text-xs text-slate-500">{leg.goal.name}</p>
+            <li key={leg.goal.id}>
+              <button
+                type="button"
+                onClick={() => onSelectLegId?.(isSelected ? null : leg.goal.id)}
+                aria-pressed={isSelected}
+                className={`flex w-full items-center justify-between rounded-lg border px-3 py-2 text-left transition ${rowClass}`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className={`h-2.5 w-2.5 rounded-full ${dotClass}`} aria-hidden="true" />
+                  <div>
+                    <p className={`text-sm ${textClass}`}>
+                      {leg.goal.startCity} to {leg.goal.endCity}
+                    </p>
+                    <p className="text-xs text-slate-500">{leg.goal.name}</p>
+                  </div>
                 </div>
-              </div>
-              <span className="text-xs text-slate-500">{formatKm(leg.goal.segmentKm)} km</span>
+                <span className="text-xs text-slate-500">{formatKm(leg.goal.segmentKm)} km</span>
+              </button>
             </li>
           )
         })}

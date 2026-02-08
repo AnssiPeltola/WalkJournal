@@ -112,7 +112,7 @@ export default function WalkHeatmapChart({
         label: 'Distance (km)',
         data: points,
         borderRadius: 2,
-        borderWidth: 0,
+        borderWidth: 0.7,
         backgroundColor: (ctx: ScriptableContext<'matrix'>) => {
           const point = ctx.raw as HeatmapPoint | undefined
           const value = point?.v ?? 0
@@ -125,8 +125,8 @@ export default function WalkHeatmapChart({
         width: (ctx: ScriptableContext<'matrix'>) => {
           const area = ctx.chart.chartArea
           if (!area) return 0
-          const gap = 1.5
-          const maxSize = 14
+          const gap = 0
+          const maxSize = 15
           const minSize = 4
           const cellW = (area.right - area.left) / Math.max(weeks, 1) - gap
           const cellH = (area.bottom - area.top) / 6.5 - gap
@@ -136,8 +136,8 @@ export default function WalkHeatmapChart({
         height: (ctx: ScriptableContext<'matrix'>) => {
           const area = ctx.chart.chartArea
           if (!area) return 0
-          const gap = 1.5
-          const maxSize = 14
+          const gap = 0
+          const maxSize = 15
           const minSize = 4
           const cellW = (area.right - area.left) / Math.max(weeks, 1) - gap
           const cellH = (area.bottom - area.top) / 6.5 - gap
@@ -153,12 +153,6 @@ export default function WalkHeatmapChart({
   const options = {
     maintainAspectRatio: false,
     responsive: true,
-    layout: {
-      padding: {
-        left: 4,
-        top: 6,
-      },
-    },
     scales: {
       x: {
         type: 'linear' as const,
@@ -171,7 +165,7 @@ export default function WalkHeatmapChart({
           stepSize: 1,
           maxRotation: 0,
           minRotation: 0,
-          padding: 6,
+          padding: 0,
           callback: (value: string | number) => {
             const numericValue = typeof value === 'string' ? Number(value) : value
             const label = monthLabelLookup.get(numericValue)
@@ -238,7 +232,7 @@ export default function WalkHeatmapChart({
   }
 
   return (
-    <section className="w-full max-w-5xl rounded-lg bg-white p-4 shadow mb-5">
+    <section className="w-full rounded-2xl bg-white p-4 shadow-md border border-slate-200 mb-5">
       <h2 className="mb-4 text-lg font-semibold text-gray-900">{title}</h2>
       <div className="relative h-40 w-full">
         <Chart type="matrix" data={data} options={options} />

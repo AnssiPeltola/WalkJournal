@@ -69,7 +69,7 @@ export default function AddWalkForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-md space-y-4 rounded-lg p-4 bg-white"
+      className="w-full max-w-md space-y-4 rounded-2xl p-4 bg-white shadow-md border border-slate-200"
     >
       <h2 className="text-lg font-semibold">Add Walk Session</h2>
 

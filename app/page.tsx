@@ -26,7 +26,7 @@ export default async function Home() {
   const dailyTotals = await getWalkDailyTotals(startDate, endDate);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-start p-8 bg-gray-300">
+    <main className="min-h-screen flex flex-col justify-center p-8 bg-gray-300">
       <h2 className="text-2xl font-bold mb-4">All Total Stats</h2>
       <TotalStatsDashboard stats={totalStats} />
       <h2 className="text-2xl font-bold mb-4">Current Week Stats</h2>
@@ -44,16 +44,20 @@ export default async function Home() {
         <h2 className="text-2xl font-bold mb-4">Journey Progress</h2>
         <JourneySection progress={journeyProgress} />
       </section>
-      <WalkHeatmapChart
-        dailyTotals={dailyTotals}
-        startDate={startDate}
-        endDate={endDate}
-        title={`Walk Distance Heatmap (${year})`}
-      />
-      <DistanceTrendChart
-        weeklyData={weeklyDistanceTotals}
-        monthlyData={monthlyDistanceTotals}
-      />
+      <section className="w-full max-w-6xl mb-5">
+        <WalkHeatmapChart
+          dailyTotals={dailyTotals}
+          startDate={startDate}
+          endDate={endDate}
+          title={`Walk Distance Heatmap (${year})`}
+        />
+      </section>
+      <section className="w-full max-w-6xl mb-5">
+        <DistanceTrendChart
+          weeklyData={weeklyDistanceTotals}
+          monthlyData={monthlyDistanceTotals}
+        />
+      </section>
     </main>
   );
 }

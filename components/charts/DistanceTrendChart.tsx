@@ -44,6 +44,7 @@ export default function DistanceTrendChart({ weeklyData, monthlyData }: Props) {
 
   const options: ChartOptions<'bar'> = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false,
@@ -76,7 +77,7 @@ export default function DistanceTrendChart({ weeklyData, monthlyData }: Props) {
   }
 
   return (
-    <div className="w-full max-w-4xl rounded-lg bg-white p-4 shadow">
+    <div className="w-full rounded-2xl bg-white p-4 shadow-md border border-slate-200">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-lg font-semibold text-gray-800">Distance Trend</h3>
         <div className="flex overflow-hidden rounded-md border border-gray-200">
@@ -104,7 +105,9 @@ export default function DistanceTrendChart({ weeklyData, monthlyData }: Props) {
           </button>
         </div>
       </div>
-      <Bar data={chartData} options={options} />
+      <div className="h-96 w-full">
+        <Bar data={chartData} options={options} />
+      </div>
     </div>
   )
 }

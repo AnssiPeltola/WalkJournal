@@ -85,7 +85,7 @@ export default function CurrentWeekStatsDashboard({ currentWeek, lastWeek }: Pro
   });
 
   return (
-    <section className="stats-grid">
+    <section className="flex flex-wrap justify-center gap-2">
       <StatCardWithDiff
         label="Total Sessions"
         value={current.totalSessions}

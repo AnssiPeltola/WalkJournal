@@ -69,23 +69,23 @@ export default function AddWalkForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md space-y-4 rounded-lg border p-4 bg-white"
+      className="w-full max-w-md space-y-4 rounded-lg p-4 bg-white"
     >
       <h2 className="text-lg font-semibold">Add Walk Session</h2>
 
-      <div>
-        <label className="block text-sm font-medium">Date</label>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="w-full rounded border p-2"
-          required
-        />
-      </div>
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div className="w-full">
+          <label className="block text-sm font-medium">Date</label>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="w-full rounded border p-1.5"
+            required
+          />
+        </div>
 
-      <div className="flex gap-4">
-        <div>
+        <div className="w-full">
           <label className="block text-sm font-medium">Minutes</label>
           <input
             type="number"
@@ -94,11 +94,11 @@ export default function AddWalkForm() {
             max={99}
             value={minutes}
             onChange={(e) => setMinutes(e.target.value)}
-            className="w-full rounded border p-2"
+            className="w-full rounded border p-1.5"
           />
         </div>
 
-        <div>
+        <div className="w-full">
           <label className="block text-sm font-medium">Seconds</label>
           <input
             type="number"
@@ -107,51 +107,55 @@ export default function AddWalkForm() {
             max={59}
             value={seconds}
             onChange={(e) => setSeconds(e.target.value)}
-            className="w-full rounded border p-2"
+            className="w-full rounded border p-1.5"
           />
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium">Distance (km)</label>
-        <input
-          type="number"
-          step="0.01"
-          placeholder="e.g. 3.25"
-          value={distanceKm}
-          onChange={(e) => setDistanceKm(e.target.value)}
-          className="w-full rounded border p-2"
-        />
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div className="w-full">
+          <label className="block text-sm font-medium">Distance (km)</label>
+          <input
+            type="number"
+            step="0.01"
+            placeholder="e.g. 3.25"
+            value={distanceKm}
+            onChange={(e) => setDistanceKm(e.target.value)}
+            className="w-full rounded border p-1.5"
+          />
+        </div>
+
+        <div className="w-full">
+          <label className="block text-sm font-medium">Steps</label>
+          <input
+            type="number"
+            placeholder="e.g. 4200"
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
+            className="w-full rounded border p-1.5"
+          />
+        </div>
+
+        <div className="w-full">
+          <label className="block text-sm font-medium">Calories (optional)</label>
+          <input
+            type="number"
+            placeholder="e.g. 300"
+            value={calories}
+            onChange={(e) => setCalories(e.target.value)}
+            className="w-full rounded border p-1.5"
+          />
+        </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium">Steps</label>
-        <input
-          type="number"
-          placeholder="e.g. 4200"
-          value={steps}
-          onChange={(e) => setSteps(e.target.value)}
-          className="w-full rounded border p-2"
-        />
+      <div className="flex justify-center">
+        <button
+          type="submit"
+          className="w-full rounded bg-black px-4 py-2 text-white hover:bg-gray-800 sm:w-40"
+        >
+          Save walk
+        </button>
       </div>
-
-      <div>
-        <label className="block text-sm font-medium">Calories (optional)</label>
-        <input
-          type="number"
-          placeholder="e.g. 300"
-          value={calories}
-          onChange={(e) => setCalories(e.target.value)}
-          className="w-full rounded border p-2"
-        />
-      </div>
-
-      <button
-        type="submit"
-        className="w-full rounded bg-black px-4 py-2 text-white hover:bg-gray-800"
-      >
-        Save walk
-      </button>
     </form>
   );
 }

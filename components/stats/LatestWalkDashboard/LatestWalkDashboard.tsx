@@ -1,7 +1,7 @@
 import { WalkSession } from '@/types/walk';
 import { formatDuration } from '@/utils/formatDuration';
 import StatCard from '@/components/stats/StatCard';
-import { formatDateTimeUTCToHelsinki } from '@/utils/formatDateTime';
+import { formatDateToFinnish } from '@/utils/formatDateTime';
 
 type Props = {
   session: WalkSession | null;
@@ -13,13 +13,13 @@ export default function LatestWalkDashboard({ session }: Props) {
   if (!session) return <p>No walk sessions yet.</p>;
 
   return (
-    <section className="stats-grid max-w-md mx-auto">
-      <StatCard label="Created At" value={formatDateTimeUTCToHelsinki(session.createdAt)} />
+    <section className="grid w-full max-w-3xl grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-3">
+      <StatCard label="Created At" value={formatDateToFinnish(session.date)} />
       <StatCard label="Distance" value={`${session.distanceKm} km`} />
       <StatCard label="Steps" value={session.steps} />
       <StatCard label="Duration" value={formatDuration(session.durationSec)} />
-      <StatCard label="Calories" value={session.calories ?? '-'} />
       <StatCard label="Avg Speed" value={`${session.avgSpeed.toFixed(2)} km/h`} />
+      <StatCard label="Calories" value={session.calories ?? '-'} />
     </section>
   );
 }

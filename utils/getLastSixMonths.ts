@@ -1,7 +1,11 @@
-export type MonthRange = {
-  startDate: string
-  endDate: string
-  label: string
+import type { MonthRange } from '@/types/time'
+
+// Build YYYY-MM-DD using local time to avoid UTC date shifts.
+function formatLocalDate(date: Date): string {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 
 function formatMonthLabel(date: Date): string {
@@ -28,8 +32,8 @@ export function getLastSixMonths(): MonthRange[] {
     const monthEnd = new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 0)
 
     months.push({
-      startDate: monthStart.toISOString().split('T')[0],
-      endDate: monthEnd.toISOString().split('T')[0],
+      startDate: formatLocalDate(monthStart),
+      endDate: formatLocalDate(monthEnd),
       label: formatMonthLabel(monthStart),
     })
   }

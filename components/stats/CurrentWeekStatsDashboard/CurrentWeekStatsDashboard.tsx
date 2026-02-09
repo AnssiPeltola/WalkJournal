@@ -75,13 +75,13 @@ export default function CurrentWeekStatsDashboard({ currentWeek, lastWeek }: Pro
     percentDecimals: 1,
   });
   const stepsDiff = buildDiff(current.totalSteps, lastWeek?.totalSteps, {
-    unit: 'steps',
+    unit: '',
   });
   const timeDiff = buildDiff(current.totalDurationSec, lastWeek?.totalDurationSec, {
     format: (value) => formatDuration(value),
   });
   const caloriesDiff = buildDiff(current.totalCalories, lastWeek?.totalCalories, {
-    unit: 'calories',
+    unit: 'cal',
   });
 
   return (

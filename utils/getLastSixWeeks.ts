@@ -1,7 +1,11 @@
-export type WeekRange = {
-  startDate: string
-  endDate: string
-  label: string
+import type { WeekRange } from '@/types/time'
+
+// Build YYYY-MM-DD using local time to avoid UTC date shifts.
+function formatLocalDate(date: Date): string {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 
 function formatWeekLabel(start: Date, end: Date): string {
@@ -31,8 +35,8 @@ export function getLastSixWeeks(): WeekRange[] {
     endDate.setDate(startDate.getDate() + 6)
 
     weeks.push({
-      startDate: startDate.toISOString().split('T')[0],
-      endDate: endDate.toISOString().split('T')[0],
+      startDate: formatLocalDate(startDate),
+      endDate: formatLocalDate(endDate),
       label: formatWeekLabel(startDate, endDate),
     })
   }
